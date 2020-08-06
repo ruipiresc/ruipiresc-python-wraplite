@@ -3,11 +3,11 @@ import sys
 from setuptools import setup
 
 def publish(option: str = 'build') -> None:
-    os.system('python -m bumpversion ' + option)
-    os.system('python setup.py sdist bdist_wheel')
+    #os.system('python -m bumpversion ' + option)
+    os.system('python setup.py build')
     os.system('twine upload dist/*')
     sys.exit()
-
+    
 if sys.argv[1] == 'publish':
     if sys.argv[2] == 'patch':
         publish('patch')
@@ -15,10 +15,10 @@ if sys.argv[1] == 'publish':
         publish('minor')
     elif sys.argv[2] == 'major':
         publish('major')
-    elif sys.argv[2] == 'build':
-        publish('build')
     elif sys.argv[2] == 'release':
         publish('--tag release')
+    else:
+        publish()
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
