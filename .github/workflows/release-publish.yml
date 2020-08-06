@@ -6,7 +6,7 @@ name: Create release of python package
 on:
   push:
     tags:
-      - '*\.*\.*'
+      - '*'
 
 jobs:
   build:
