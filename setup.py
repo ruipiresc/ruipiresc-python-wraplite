@@ -2,33 +2,41 @@ import os
 import sys
 from setuptools import setup
 
-def publish(option: str = 'build') -> None:
-    os.system('rm -rf build dist *.egg-info')
-    os.system('git push')
-    os.system('python -m bumpversion ' + option)
-    os.system('python setup.py bdist')
-    os.system('twine upload dist/*')
-    os.system('git push')
-    os.system('git push --tags')
-    sys.exit()
-    
-if len(sys.argv) > 1:
-    if sys.argv[1] == 'publish':
-        if len(sys.argv) > 2:
-            if sys.argv[2] == 'patch':
-                publish('patch')
-            elif sys.argv[2] == 'minor':
-                publish('minor')
-            elif sys.argv[2] == 'major':
-                publish('major')
-            elif sys.argv[2] == 'release':
-                publish('--tag release')
-        publish()
-
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'wraplite', '__version__.py')) as f:
     exec(f.read(), about)
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'tag':
+        option = 'build'
+        if len(sys.argv) > 2:
+            if sys.argv[2] == 'patch':
+                option = 'patch'
+            elif sys.argv[2] == 'minor':
+                option = 'minor'
+            elif sys.argv[2] == 'major':
+                option = 'major'
+            elif sys.argv[2] == 'release':
+                option = '--tag release'
+        if option == 'build' and 'dev' not in about['__version__']:
+            raise ValueError('cannot tag a build without starting a patch, minor or major update')
+        os.system('python -m bumpversion ' + option)
+        os.system('git push')
+        os.system('git push --tags')
+        sys.exit()
+    elif sys.argv[1] == 'publish':
+        option = 'prerelease'
+        if len(sys.argv) > 2:
+            if sys.argv[2] == 'release':
+                option = 'release'
+        if option == 'release' and 'dev' in about['__version__']:
+            raise ValueError('cannot publish a release with a dev tag')
+        elif option == 'prerelease' and 'dev' not in about['__version__']:
+            raise ValueError('cannot publish a prerelease without a dev tag')
+        os.system('python setup.py sdist bdist_wheel')
+        os.system('twine upload dist/*')
+        sys.exit()
 
 with open('README.md', 'r') as f:
     readme = f.read()
