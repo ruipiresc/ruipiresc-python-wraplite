@@ -6,6 +6,7 @@ def publish(option: str = 'build') -> None:
     #os.system('python -m bumpversion ' + option)
     os.system('python setup.py build')
     os.system('twine upload dist/*')
+    os.system('git push --tags ')
     sys.exit()
     
 if sys.argv[1] == 'publish':
