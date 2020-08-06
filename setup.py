@@ -3,6 +3,7 @@ import sys
 from setuptools import setup
 
 def publish(option: str = 'build') -> None:
+    os.system('git push')
     os.system('python -m bumpversion ' + option)
     os.system('python setup.py build')
     os.system('twine upload dist/*')
