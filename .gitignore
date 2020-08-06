@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# portfolio
+/portfolio
+*.db
+*.xlsx
+app.py
+setup_db.py
+/.vscode
