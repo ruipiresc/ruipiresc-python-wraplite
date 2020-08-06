@@ -6,7 +6,7 @@ Python No SQL SQLite Wrapper
 ```
 pip install wraplite (not available yet)
 ```
-(not available yet)
+(almost available yet)
 
 ## Usage
 
