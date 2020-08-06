@@ -1,6 +1,6 @@
 __title__ = 'wraplite'
 __description__ = 'Python No SQL SQLite Wrapper'
-__version__ = 0.0.4
+__version__ = '0.0.4'
 __author__ = 'Rui Pires'
 __author_email__ = 'ruipiresc@gmail.com'
 __license__ = 'GPLv3'

@@ -8,16 +8,16 @@ def publish(option: str = 'build') -> None:
     os.system('twine upload dist/*')
     sys.exit()
 
-if sys.argv[-1] == 'publish':
-    if sys.argv[-2] == 'patch':
+if sys.argv[1] == 'publish':
+    if sys.argv[2] == 'patch':
         publish('patch')
-    elif sys.argv[-2] == 'minor':
+    elif sys.argv[2] == 'minor':
         publish('minor')
-    elif sys.argv[-2] == 'major':
+    elif sys.argv[2] == 'major':
         publish('major')
-    elif sys.argv[-2] == 'build':
+    elif sys.argv[2] == 'build':
         publish('build')
-    elif sys.argv[-2] == 'release':
+    elif sys.argv[2] == 'release':
         publish('--tag release')
 
 about = {}
