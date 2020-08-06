@@ -2,7 +2,6 @@ import os
 import sys
 from setuptools import setup
 
-
 if len(sys.argv) > 1:
     if sys.argv[1] == 'tag':
         option = 'build'
