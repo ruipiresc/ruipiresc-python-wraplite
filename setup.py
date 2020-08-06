@@ -1,5 +1,13 @@
 import os
+import sys
 from setuptools import setup
+
+if sys.argv[-1] == 'publish':
+    print('publish')
+    #python setup.py sdist bdist_wheel')
+    #os.system('python setup.py sdist bdist_wheel')
+    #os.system('twine upload dist/*')
+    sys.exit()
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
