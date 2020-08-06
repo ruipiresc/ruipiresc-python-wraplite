@@ -2,28 +2,27 @@ import os
 import sys
 from setuptools import setup
 
-def publish(option: str = 'build') -> None:
-    os.system('rm -rf build dist *.egg-info')
-    os.system('git push')
-    os.system('python -m bumpversion ' + option)
-    os.system('python setup.py bdist')
-    os.system('twine upload dist/*')
-    os.system('git push')
-    os.system('git push --tags')
-    sys.exit()
-    
+
 if len(sys.argv) > 1:
-    if sys.argv[1] == 'publish':
+    if sys.argv[1] == 'tag':
+        option = 'build'
         if len(sys.argv) > 2:
             if sys.argv[2] == 'patch':
-                publish('patch')
+                option = 'patch'
             elif sys.argv[2] == 'minor':
-                publish('minor')
-            elif sys.argv[2] == 'major':
-                publish('major')
+                option = 'minor'
+            elif sys.argv[2] == 'minor':
+                option = 'minor'
             elif sys.argv[2] == 'release':
-                publish('--tag release')
-        publish()
+                option = '--tag release'
+        os.system('python -m bumpversion ' + option)
+        os.system('git push')
+        os.system('git push --tags')
+        sys.exit()
+    elif sys.argv[1] == 'publish':
+        os.system('python setup.py sdist bdist_wheel')
+        os.system('twine upload dist/*')
+        sys.exit()
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
