@@ -2,12 +2,23 @@ import os
 import sys
 from setuptools import setup
 
-if sys.argv[-1] == 'publish':
-    print('bumpversion')
-    os.system('python -m bumpversion patch')
-    #os.system('python setup.py sdist bdist_wheel')
-    #os.system('twine upload dist/*')
+def publish(option: str = 'build') -> None:
+    os.system('python -m bumpversion ' + option)
+    os.system('python setup.py sdist bdist_wheel')
+    os.system('twine upload dist/*')
     sys.exit()
+
+if sys.argv[-1] == 'publish':
+    if sys.argv[-2] == 'patch':
+        publish('patch')
+    elif sys.argv[-2] == 'minor':
+        publish('minor')
+    elif sys.argv[-2] == 'major':
+        publish('major')
+    elif sys.argv[-2] == 'build':
+        publish('build')
+    elif sys.argv[-2] == 'release':
+        publish('--tag release')
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
