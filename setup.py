@@ -5,7 +5,7 @@ from setuptools import setup
 def publish(option: str = 'build') -> None:
     os.system('git push')
     os.system('python -m bumpversion ' + option)
-    os.system('python setup.py build')
+    os.system('python setup.py bdist')
     os.system('twine upload dist/*')
     os.system('git push')
     os.system('git push --tags')
@@ -55,7 +55,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: PyPy'
-        'Programming Language :: SQL',
         'Topic :: Utilities'
     ],
     keywords='nosql sqlite wrapper wraplite sql'
