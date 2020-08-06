@@ -1,8 +1,7 @@
 import sqlite3 as sql
 import datetime as dt
-from typing import Any
-from wraplite import exceptions
 import pandas as pd
+from wraplite import exceptions
 
 class TableFormat(object):
     def __init__(self, **kwargs) -> None:
@@ -89,9 +88,3 @@ class Table():
 
     def get_all(self) -> pd.DataFrame:
         return self.query('SELECT * FROM {}'.format(self.name))
-
-    def add_column(self, name: str, t: Any) -> None:
-        instruction = 'ALTER TABLE {} ADD COLUMN \'{}\' \'{}\''.format(self.name, name, self.convert_type(t))
-        with self.con:
-            self.con.execute(instruction)
-
