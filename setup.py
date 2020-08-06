@@ -3,8 +3,8 @@ import sys
 from setuptools import setup
 
 if sys.argv[-1] == 'publish':
-    print('publish')
-    #python setup.py sdist bdist_wheel')
+    print('bumpversion')
+    os.system('python -m bumpversion patch')
     #os.system('python setup.py sdist bdist_wheel')
     #os.system('twine upload dist/*')
     sys.exit()
