@@ -55,7 +55,8 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: Implementation :: PyPy'
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: SQL',
         'Topic :: Utilities'
     ],
     keywords='nosql sqlite wrapper wraplite sql'
