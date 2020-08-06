@@ -37,6 +37,9 @@ if len(sys.argv) > 1:
         os.system('python setup.py sdist bdist_wheel')
         os.system('twine upload dist/*')
         sys.exit()
+    elif sys.argv[1] == 'build':
+        os.system('python setup.py sdist bdist_wheel')
+        sys.exit()
 
 with open('README.md', 'r') as f:
     readme = f.read()
