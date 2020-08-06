@@ -9,16 +9,17 @@ def publish(option: str = 'build') -> None:
     os.system('git push --tags ')
     sys.exit()
     
-if sys.argv[1] == 'publish':
-    if sys.argv[2] == 'patch':
-        publish('patch')
-    elif sys.argv[2] == 'minor':
-        publish('minor')
-    elif sys.argv[2] == 'major':
-        publish('major')
-    elif sys.argv[2] == 'release':
-        publish('--tag release')
-    else:
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'publish':
+        if len(sys.argv) > 2:
+            if sys.argv[2] == 'patch':
+                publish('patch')
+            elif sys.argv[2] == 'minor':
+                publish('minor')
+            elif sys.argv[2] == 'major':
+                publish('major')
+            elif sys.argv[2] == 'release':
+                publish('--tag release')
         publish()
 
 about = {}
