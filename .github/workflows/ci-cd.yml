@@ -1,0 +1,28 @@
+# This workflows will build a python package, create a release and upload the package
+# For more information see: https://github.com/actions/create-release and https://github.com/actions/upload-release-asset
+
+name: CI CD action
+
+on:
+  push:
+    tag:
+      - 'v*'
+      
+jobs:
+  build:
+    name: CI CD action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel twine
+      - name: Publish python package
+        run: |
+          python setup.py publish
