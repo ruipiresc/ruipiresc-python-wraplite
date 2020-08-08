@@ -33,9 +33,9 @@ jobs:
         run: |
           echo ${{ steps.get_version.outputs.version }}
           echo ${{ steps.get_version.outputs.version-without-v }}
+          echo $PWD
           ls
       - name: Create Release
-        if: ${{ contains(github.ref, 'dev') == false }}
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -44,36 +44,12 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release of version ${{ steps.get_version.outputs.version-without-v }}
           draft: false
-          prerelease: false
-      - name: Create Prerelease
-        if: ${{ contains(github.ref, 'dev') == true }}
-        id: create_prerelease
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Prerelease of version ${{ steps.get_version.outputs.version-without-v }}
-          draft: false
-          prerelease: true
+          prerelease: ${{ contains(github.ref, 'dev') == true }}
       - name: Upload Release Asset
-        if: ${{ contains(github.ref, 'dev') == false }}
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_prerelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_content_type: application/zip
-      - name: Upload Prerelease Asset
-        if: ${{ contains(github.ref, 'dev') == true }}
-        id: upload-prerelease-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CURRENT_VERSION: ${{ format( github.ref, 'refs/tags/v', '') }}
         with:
           upload_url: ${{ steps.create_prerelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
