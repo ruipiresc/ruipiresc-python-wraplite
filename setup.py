@@ -26,14 +26,6 @@ if len(sys.argv) > 1:
         os.system('git push --tags')
         sys.exit()
     elif sys.argv[1] == 'publish':
-        option = 'prerelease'
-        if len(sys.argv) > 2:
-            if sys.argv[2] == 'release':
-                option = 'release'
-        if option == 'release' and 'dev' in about['__version__']:
-            raise ValueError('cannot publish a release with a dev tag')
-        elif option == 'prerelease' and 'dev' not in about['__version__']:
-            raise ValueError('cannot publish a prerelease without a dev tag')
         os.system('python setup.py sdist bdist_wheel')
         os.system('twine upload dist/*')
         sys.exit()
