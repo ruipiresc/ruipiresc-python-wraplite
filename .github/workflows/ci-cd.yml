@@ -27,7 +27,5 @@ jobs:
         run: |
           python setup.py publish
       - name: Echo package current version
-        env:
-          version: ${{ format( github.ref, 'refs/tags/v', '') }}
         run: |
-            echo ${{ version }}
+            echo ${{ format( github.ref, 'refs/tags/v', '') }}
