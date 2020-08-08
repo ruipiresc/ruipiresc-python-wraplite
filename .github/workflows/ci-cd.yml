@@ -26,6 +26,9 @@ jobs:
       - name: Publish python package
         run: |
           python setup.py publish
+      - name: Get python package version
+        id: get_version
+        uses: battila7/get-version-action@v2
       - name: Echo package current version
-        run: |
-            echo ${{ format( github.ref, 'refs/tags/v', '') }}
+      - run: echo ${{ steps.get_version.outputs.version }}
+      - run: echo ${{ steps.get_version.outputs.version-without-v }}
