@@ -63,8 +63,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_prerelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./dist/wraplite-$${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_name: wraplite-$${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          asset_path: ./dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_content_type: application/zip
       - name: Upload Prerelease Asset
         if: ${{ contains(github.ref, 'dev') == true }}
@@ -75,7 +75,7 @@ jobs:
           CURRENT_VERSION: ${{ format( github.ref, 'refs/tags/v', '') }}
         with:
           upload_url: ${{ steps.create_prerelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./dist/wraplite-$${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_name: wraplite-$${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          asset_path: ./dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_content_type: application/zip
 
