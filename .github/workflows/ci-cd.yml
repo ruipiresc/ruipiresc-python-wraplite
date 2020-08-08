@@ -28,8 +28,12 @@ jobs:
           pip install setuptools wheel twine
       - name: Publish python package
         id: publish_package
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          python setup.py publish
+          python setup.py sdist bdist_wheel
+          twine upload dist/*
           echo ::set-output name=artifact_path:${{ github.workspace }}/dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           echo ::set-output name=artifact_name::wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           echo ::set-output name=artifact_type::application/zip
