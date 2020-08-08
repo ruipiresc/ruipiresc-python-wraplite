@@ -46,6 +46,8 @@ jobs:
           prerelease: ${{ contains(github.ref, 'dev') == true }}
       - name: Set dist as working dir
         working-directory: ./dist
+        run: |
+          echo $PWD
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
