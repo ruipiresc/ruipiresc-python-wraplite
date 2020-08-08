@@ -29,13 +29,16 @@ jobs:
       - name: Get python package version
         id: get_version
         uses: battila7/get-version-action@v2
-      - name: Echo package current version
+      - name: Prepare artifact
+        id: prepare_artifact
         run: |
-          echo ${{ steps.get_version.outputs.version }}
-          echo ${{ steps.get_version.outputs.version-without-v }}
-          echo $GITHUB_WORKSPACE
           echo $PWD
-          ls
+          echo ::set-output name=artifact_path::./dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          echo ::set-output name=artifact_name::wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          echo ::set-output name=artifact_type::application/zip
+          echo ls
+          cd dist
+          echo ls
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -52,11 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: /home/runner/work/ruipiresc.python.wraplite/ruipiresc.python.wraplite/dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
-          asset_content_type: application/zip
-      - name: Echo package current version part 2
-        working-directory: ./dist
-        run: |
-          echo $PWD
-          ls
+          asset_path: ${{ steps.prepare_artifact.outputs.artifact_path }}
+          asset_name: ${{ steps.prepare_artifact.outputs.artifact_name }}
+          asset_content_type: ${{ steps.prepare_artifact.outputs.artifact_type }}
