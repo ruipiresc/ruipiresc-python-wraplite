@@ -33,6 +33,7 @@ jobs:
         run: |
           echo ${{ steps.get_version.outputs.version }}
           echo ${{ steps.get_version.outputs.version-without-v }}
+          echo $GITHUB_WORKSPACE
           echo $PWD
           ls
       - name: Create Release
@@ -46,12 +47,16 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref, 'dev') == true }}
       - name: Upload Release Asset
-        id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_prerelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: /home/runner/work/ruipiresc.python.wraplite/ruipiresc.python.wraplite/dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_content_type: application/zip
+          - name: Echo package current version part 2
+          working-directory: ./dist
+          run: |
+            echo $PWD
+            ls
