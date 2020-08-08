@@ -26,3 +26,6 @@ jobs:
       - name: Publish python package
         run: |
           python setup.py publish
+      - name: Echo github.ref
+        run: |
+          echo ${{ github.ref }}
