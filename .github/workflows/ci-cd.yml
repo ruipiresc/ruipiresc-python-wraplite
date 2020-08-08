@@ -12,8 +12,6 @@ jobs:
   build:
     name: CI CD action
     runs-on: ubuntu-latest
-    env:
-      CURRENT_VERSION: ${{ format( github.ref, 'refs/tags/v', '') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,5 +27,7 @@ jobs:
         run: |
           python setup.py publish
       - name: Echo package current version
+        env:
+          version: ${{ format( github.ref, 'refs/tags/v', '') }}
         run: |
-          echo ${{ CURRENT_VERSION }}
+            echo ${{ version }}
