@@ -33,6 +33,7 @@ jobs:
         run: |
           echo ${{ steps.get_version.outputs.version }}
           echo ${{ steps.get_version.outputs.version-without-v }}
+          ls
       - name: Create Release
         if: ${{ contains(github.ref, 'dev') == false }}
         id: create_release
@@ -78,4 +79,3 @@ jobs:
           asset_path: ./dist/wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_name: wraplite-${{ steps.get_version.outputs.version-without-v }}-py3-none-any.whl
           asset_content_type: application/zip
-
