@@ -18,7 +18,7 @@ if len(sys.argv) > 1:
             elif sys.argv[2] == 'major':
                 option = 'major'
             elif sys.argv[2] == 'release':
-                option = '--tag release'
+                option = 'release'
         if option == 'build' and 'dev' not in about['__version__']:
             raise ValueError('cannot tag a build without starting a patch, minor or major update')
         os.system('python -m bumpversion ' + option)
