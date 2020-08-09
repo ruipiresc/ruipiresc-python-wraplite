@@ -29,6 +29,10 @@ class TableFormat(object):
                 column += 'FLOAT'
             elif value == dt.datetime:
                 column += 'DATETIME'
+            elif value == dt.date:
+                column += 'DATE'
+            elif value == dt.time:
+                column += 'TIME'
             else: 
                 raise NotImplementedError()
             columns.append(column)
