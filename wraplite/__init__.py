@@ -2,7 +2,7 @@ import os
 from wraplite import exceptions
 from wraplite.database import Database
 
-def get(name: str, folder_path: str = './', error_if_exist: bool = False) -> bool:
+def get(name: str, folder_path: str = './', error_if_exist: bool = False) -> Database:
     if not os.path.isdir(folder_path):
         raise exceptions.FolderNotExistError()
 
